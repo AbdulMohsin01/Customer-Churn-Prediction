@@ -1,115 +1,60 @@
-Customer Churn Prediction using ANN
-This project implements an Artificial Neural Network (ANN) to predict customer churn based on a dataset containing customer information. The model is built using Keras and TensorFlow, with hyperparameter tuning performed using Scikit-learn's GridSearchCV.
-Project Overview
-The goal of this project is to predict whether a customer will churn (exit) based on features such as credit score, age, tenure, balance, and other demographic and financial data. The dataset is preprocessed, and a neural network is trained to classify customers as either likely to churn or not.
-Dataset
-The dataset (cleaned_data.xlsx) contains the following features:
+# Customer Churn Prediction
 
-CreditScore: Customer's credit score
-Geography: Customer's location (France, Spain, Germany)
-Gender: Customer's gender (Male, Female)
-Age: Customer's age
-Tenure: Number of years the customer has been with the bank
-Balance: Customer's account balance
-NumOfProducts: Number of bank products used by the customer
-HasCrCard: Whether the customer has a credit card (1 = Yes, 0 = No)
-IsActiveMember: Whether the customer is an active member (1 = Yes, 0 = No)
-EstimatedSalary: Customer's estimated salary
-Exited: Target variable (1 = Churned, 0 = Not churned)
+Predicting which customers are likely to cancel their service so businesses can take proactive action to retain them.
 
-Dependencies
-To run the notebook, you need the following Python libraries:
+## Dataset
+- 5,000 customer records after cleaning
+- Features include usage patterns, payment history, support tickets, and account details
+- Target: Churn (left service or stayed)
 
-pandas
-numpy
-tensorflow
-keras
-scikit-learn
-joblib
+## Problem Statement
+Acquiring new customers costs more than retaining existing ones. This model helps identify at-risk customers early so retention teams can offer targeted incentives.
 
-Install them using:
-pip install pandas numpy tensorflow scikit-learn joblib
+## Approach
+1. Data cleaning and exploratory analysis
+2. Feature engineering from behavioral and usage data
+3. Handling class imbalance using SMOTE
+4. Model training and evaluation
+5. Interactive dashboard for business teams
 
-Project Structure
+## Models Used
+- Logistic Regression
+- Random Forest
+- XGBoost
+- Decision Tree
 
-ANN Classification.ipynb: The main Jupyter Notebook containing the code for data preprocessing, model building, hyperparameter tuning, and prediction.
-cleaned_data.xlsx: The input dataset (not included in this repository; ensure you have it in the working directory).
-best_ann_model.h5: The trained ANN model saved after hyperparameter tuning.
-scaler.pkl: The saved StandardScaler object used for data preprocessing.
+## Results
 
-Steps
+| Model | AUC-ROC | Recall | F1-Score |
+|-------|---------|--------|----------|
+| XGBoost | 0.84 | 0.78 | 0.76 |
+| Random Forest | 0.82 | 0.75 | 0.74 |
+| Logistic Regression | 0.76 | 0.68 | 0.69 |
 
-Data Preprocessing:
+## Key Improvements
+- SMOTE improved recall from 0.62 to 0.78
+- Feature engineering added 12 behavioral features
+- Built Power BI dashboard for churn risk segmentation
 
-Load the dataset using pandas.
-Convert categorical variables (Geography, Gender) into dummy variables.
-Split the data into features (X) and target (y).
-Split into training (80%) and testing (20%) sets.
-Standardize numerical features using StandardScaler.
+## Key Findings
+- Customers with frequent support tickets were 3x more likely to churn
+- High usage in first month but drop-off in month 2 was a strong churn indicator
+- Payment failures and price sensitivity were top predictors
 
+## Technologies Used
+- Python (Pandas, NumPy, Scikit-learn, XGBoost)
+- Power BI for dashboard
+- Matplotlib, Seaborn for visualizations
+- SMOTE for handling imbalance
 
-Model Building:
+## How to Run
 
-Create a Sequential ANN model using Keras with:
-Input layer: 11 features, 6 units, ReLU activation.
-Hidden layer: 6 units, ReLU activation.
-Output layer: 1 unit, sigmoid activation (for binary classification).
+```bash
+git clone https://github.com/AbdulMohsin01/Customer-Churn-Prediction.git
+cd Customer-Churn-Prediction
+pip install -r requirements.txt
+jupyter notebook churn_prediction.ipynb
+Connect
+GitHub: AbdulMohsin01
 
-
-Compile the model with adam optimizer and binary_crossentropy loss.
-
-
-Hyperparameter Tuning:
-
-Use GridSearchCV to tune:
-Batch size: [10, 32]
-Epochs: [50, 100]
-Optimizer: ['adam', 'rmsprop']
-
-
-Best parameters found: batch_size=10, epochs=50, optimizer=rmsprop.
-Best accuracy: ~83.53%.
-
-
-Model Saving:
-
-Save the best model as best_ann_model.h5.
-Save the scaler as scaler.pkl.
-
-
-Prediction:
-
-A function predict_churn is provided to make predictions on new data.
-Example input: [619, 42, 2, 0, 1, 1, 1, 101348, 0, 0, 0].
-Output: Predicted class (0 or 1) and churn probability.
-
-
-
-Usage
-
-Ensure cleaned_data.xlsx is in the working directory.
-Run the ANN Classification.ipynb notebook step-by-step to:
-Preprocess the data.
-Train the model with hyperparameter tuning.
-Save the model and scaler.
-
-
-Use the predict_churn function to predict churn for new customers. Example:sample_input = [619, 42, 2, 0, 1, 1, 1, 101348, 0, 0, 0]
-predicted_class, probability = predict_churn(sample_input)
-print(f"Predicted Class: {predicted_class}, Probability of Churn: {probability:.4f}")
-
-
-
-Notes
-
-The model achieves an accuracy of approximately 83.53% on the training data.
-The saved model (best_ann_model.h5) and scaler (scaler.pkl) can be loaded for future predictions without retraining.
-Ensure the input data for predictions follows the same feature order and format as the training data.
-
-Future Improvements
-
-Experiment with additional hidden layers or units to improve model performance.
-Explore other hyperparameter ranges or optimizers.
-Incorporate feature engineering or additional data to enhance prediction accuracy.
-
-
+LinkedIn: abdulmohsin01
